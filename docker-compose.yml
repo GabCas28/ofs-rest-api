@@ -1,0 +1,28 @@
+version: '3.5'
+services:
+  users:
+    image: users
+    container_name: users
+    build: .
+    environment: 
+      - MONGOHOST=mongo
+      - MONGOPORT=27017
+      - DATABASE=users
+    links:
+      - mongo:mongo
+    networks:
+      - backend
+    ports:
+      - "3600:3600"
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
